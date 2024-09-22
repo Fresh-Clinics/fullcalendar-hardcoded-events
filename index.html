@@ -40,20 +40,19 @@ $(document).ready(function () {
             left: 'resourceTimeGridDay,resourceTimeGridThreeDay',
             center: 'title',
             right: 'prev,next'
-    },
-    views: {
-      resourceTimeGridThreeDay: {
-        type: 'resourceTimeGrid',
-        duration: { days: 3 },
-        buttonText: '3 Days'
-      },
-        
-      resourceTimeGridDay: {
-        type: 'resourceTimeGrid',
-        duration: { days: 1 },
-        buttonText: '1 Day'
-      }
-    },
+        },
+        views: {
+            resourceTimeGridThreeDay: {
+                type: 'resourceTimeGrid',
+                duration: { days: 3 },
+                buttonText: '3 Days'
+            },
+            resourceTimeGridDay: {
+                type: 'resourceTimeGrid',
+                duration: { days: 1 },
+                buttonText: '1 Day'
+            }
+        },
         dayMinWidth: 150, // Set column width
         height: 'auto',
         slotMinTime: '07:00',
@@ -95,14 +94,14 @@ $(document).ready(function () {
             const event = info.event;
 
             // Format and convert time to Australia/Sydney timezone
-            const startDateTime = formatTimeToAEST(new Date(event.extendedProps.rawStartTime));
-            const endDateTime = formatTimeToAEST(new Date(event.extendedProps.rawEndTime));
+            const startDateTime = formatTimeToAEST(new Date(event.start));
+            const endDateTime = formatTimeToAEST(new Date(event.end));
 
             // Extract the necessary values for the URL
             const category = event.extendedProps.category || '1'; // Default to category 1 if not available
             const service = '363'; // This could be dynamic if needed
-            const date = luxon.DateTime.fromISO(event.start).toFormat('yyyy-MM-dd');
-            const time = luxon.DateTime.fromISO(event.start).toFormat('HH:mm:ss');
+            const date = luxon.DateTime.fromJSDate(event.start).toFormat('yyyy-MM-dd');
+            const time = luxon.DateTime.fromJSDate(event.start).toFormat('HH:mm:ss');
 
             // Create the dynamic booking URL
             const bookingUrl = `https://thefreshlifeconference.simplybook.net/v2/#book/category/${category}/service/${service}/count/1/date/${date}/time/${time}/`;
