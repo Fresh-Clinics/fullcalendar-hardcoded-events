@@ -98,6 +98,15 @@ $(document).ready(function () {
             const startDateTime = formatTimeToAEST(new Date(event.extendedProps.rawStartTime));
             const endDateTime = formatTimeToAEST(new Date(event.extendedProps.rawEndTime));
 
+            // Extract the necessary values for the URL
+            const category = event.extendedProps.category || '1'; // Default to category 1 if not available
+            const service = '363'; // This could be dynamic if needed
+            const date = luxon.DateTime.fromISO(event.start).toFormat('yyyy-MM-dd');
+            const time = luxon.DateTime.fromISO(event.start).toFormat('HH:mm:ss');
+
+            // Create the dynamic booking URL
+            const bookingUrl = `https://thefreshlifeconference.simplybook.net/v2/#book/category/${category}/service/${service}/count/1/date/${date}/time/${time}/`;
+
             const popup = document.createElement('div');
             popup.className = 'popup-overlay';
             popup.innerHTML = `
@@ -106,8 +115,10 @@ $(document).ready(function () {
                     ${getResourceLogo(event.resourceId) ? `<img src="${getResourceLogo(event.resourceId)}" style="width: 100px; margin: 10px auto;" alt="Resource Logo">` : ''}
                     <p><strong>${startDateTime} - ${endDateTime}</strong></p>
                     <h3>${event.title}</h3>
-                    <div style="font-size: 0.9rem; font-family: Arial;">${event.extendedProps.description}</div>                  
-                    <div class="popup-footer">Bookings open Monday 23rd October at 7:00PM AEST</div>
+                    <div style="font-size: 0.9rem; font-family: Arial;">${event.extendedProps.description}</div>
+                    <div class="popup-footer">
+                        <a href="${bookingUrl}" class="book-now-button" target="_blank">Book Now</a>
+                    </div>
                 </div>
             `;
             document.body.appendChild(popup);
