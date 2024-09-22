@@ -124,3 +124,20 @@ body {
     opacity: unset;
 }
 .fc-direction-ltr .fc-button-group > .fc-button:not(:last-child) {margin-right:10px}
+
+.book-now-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #84cdb8;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.book-now-button:hover {
+    background-color: #6da58d;
+}
+
