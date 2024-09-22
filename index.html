@@ -102,7 +102,7 @@ $(document).ready(function () {
 
             // Extract the necessary values for the URL
             const category = event.extendedProps.category || '1'; // Default to category 1 if not available
-            const service = '363'; // This could be dynamic if needed
+            const service = event.extendedProps.service || '363'; // Make service dynamic
             const date = startDateTimeLuxon.toFormat('yyyy-MM-dd'); // Correctly formatted date
             const time = startDateTimeLuxon.toFormat('HH:mm:ss'); // Correctly formatted time
 
