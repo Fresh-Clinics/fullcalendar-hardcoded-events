@@ -93,15 +93,18 @@ $(document).ready(function () {
         eventClick: function (info) {
             const event = info.event;
 
-            // Format and convert time to Australia/Sydney timezone
-            const startDateTime = formatTimeToAEST(new Date(event.start));
-            const endDateTime = formatTimeToAEST(new Date(event.end));
+            // Format and convert time to Australia/Sydney timezone using Luxon
+            const startDateTimeLuxon = luxon.DateTime.fromJSDate(event.start).setZone('Australia/Sydney');
+            const endDateTimeLuxon = luxon.DateTime.fromJSDate(event.end).setZone('Australia/Sydney');
+
+            const startDateTime = startDateTimeLuxon.toFormat('h:mm a');
+            const endDateTime = endDateTimeLuxon.toFormat('h:mm a');
 
             // Extract the necessary values for the URL
             const category = event.extendedProps.category || '1'; // Default to category 1 if not available
             const service = '363'; // This could be dynamic if needed
-            const date = luxon.DateTime.fromJSDate(event.start).toFormat('yyyy-MM-dd');
-            const time = luxon.DateTime.fromJSDate(event.start).toFormat('HH:mm:ss');
+            const date = startDateTimeLuxon.toFormat('yyyy-MM-dd'); // Correctly formatted date
+            const time = startDateTimeLuxon.toFormat('HH:mm:ss'); // Correctly formatted time
 
             // Create the dynamic booking URL
             const bookingUrl = `https://thefreshlifeconference.simplybook.net/v2/#book/category/${category}/service/${service}/count/1/date/${date}/time/${time}/`;
